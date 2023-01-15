@@ -1,4 +1,6 @@
-const IMG_SIZE = 360
+import { useEffect, useRef } from "react"
+
+const IMG_SIZE = 720
 
 type AlpacaProps = {
   accessorieImgLink: string
@@ -12,15 +14,22 @@ type AlpacaProps = {
   noseImgLink: string
 }
 export const Alpaca = ({ accessorieImgLink, backgroundImgLink, earImgLink, eyeImgLink, hairImgLink, legImgLink, mouthImgLink, neckImgLink, noseImgLink }: AlpacaProps) => {
-  return <div style={{ position: 'relative' }}>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={backgroundImgLink} style={{ position: 'absolute' }} alt="background" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={earImgLink} style={{ position: 'absolute' }} alt="ear" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={hairImgLink} style={{ position: 'absolute' }} alt="hair" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={legImgLink} style={{ position: 'absolute' }} alt="leg" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={neckImgLink} style={{ position: 'absolute' }} alt="neck" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={noseImgLink} style={{ position: 'absolute' }} alt="nose" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={accessorieImgLink} style={{ position: 'absolute' }} alt="accessorie" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={eyeImgLink} style={{ position: 'absolute' }} alt="eye" ></img>
-    <img height={IMG_SIZE} width={IMG_SIZE} src={mouthImgLink} style={{ position: 'absolute' }} alt="mouth" ></img>
-  </div>
+  const allImageUrls = [backgroundImgLink, earImgLink, hairImgLink, legImgLink, neckImgLink, noseImgLink, accessorieImgLink, eyeImgLink, mouthImgLink];
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const context = canvas?.getContext('2d');
+
+    if (context) {
+      context.clearRect(0, 0, IMG_SIZE, IMG_SIZE)
+      allImageUrls?.forEach(url => {
+        const imgObj = new Image();
+        imgObj.src = url;
+        imgObj.onload = () => context?.drawImage(imgObj, 0, 0);
+      });
+    };
+  }, [accessorieImgLink, backgroundImgLink, earImgLink, eyeImgLink, hairImgLink, legImgLink, mouthImgLink, neckImgLink, noseImgLink, allImageUrls]);
+
+  return <canvas ref={canvasRef} height={IMG_SIZE} width={IMG_SIZE} />
 }
