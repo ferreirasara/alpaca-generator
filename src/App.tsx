@@ -40,7 +40,7 @@ export const App = () => {
   });
 
   const randomAlpaca = async () => {
-    setSelectedProperties({
+    const randomProperties = {
       accessorie: getRandomElement(ACCESSORIE_NAMES),
       background: getRandomElement(BACKGROUND_NAMES),
       ear: getRandomElement(EAR_NAMES),
@@ -50,7 +50,8 @@ export const App = () => {
       mouth: getRandomElement(MOUTH_NAMES),
       neck: getRandomElement(NECK_NAMES),
       nose: getRandomElement(NOSE_NAMES),
-    })
+    }
+    setSelectedProperties({ ...randomProperties })
   }
 
   const downloadAlpaca = () => {
