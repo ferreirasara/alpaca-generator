@@ -1,18 +1,10 @@
 import { useState } from "react";
-import { AccessorieSelect } from "./components/AccessorieSelect";
 import { Alpaca } from "./components/Alpaca";
-import { BackgroundSelect } from "./components/BackgroundSelect";
-import { EarSelect } from "./components/EarSelect";
-import { EyeSelect } from "./components/EyeSelect";
-import { HairSelect } from "./components/HairSelect";
 import { Layout } from "./components/Layout";
-import { LegSelect } from "./components/LegSelect";
-import { MouthSelect } from "./components/MouthSelect";
-import { NeckSelect } from "./components/NeckSelect";
-import { NoseSelect } from "./components/NoseSelect";
 import { ACCESSORIE_NAMES, BACKGROUND_NAMES, EAR_NAMES, EYE_NAMES, HAIR_NAMES, LEG_NAMES, MOUTH_NAMES, NECK_NAMES, NOSE_NAMES } from "./utils/assetsNames";
 import { getRandomElement } from "./utils/utils";
 import './app.css';
+import { SelectProperty } from "./components/SelectProperty";
 
 export type SelectedProperties = {
   accessorie: string
@@ -26,33 +18,22 @@ export type SelectedProperties = {
   nose: string
 }
 
-export const App = () => {
-  const [selectedProperties, setSelectedProperties] = useState<SelectedProperties>({
-    accessorie: getRandomElement(ACCESSORIE_NAMES),
-    background: getRandomElement(BACKGROUND_NAMES),
-    ear: getRandomElement(EAR_NAMES),
-    eye: getRandomElement(EYE_NAMES),
-    hair: getRandomElement(HAIR_NAMES),
-    leg: getRandomElement(LEG_NAMES),
-    mouth: getRandomElement(MOUTH_NAMES),
-    neck: getRandomElement(NECK_NAMES),
-    nose: getRandomElement(NOSE_NAMES),
-  });
+const generateRandomAlpaca = () => ({
+  accessorie: getRandomElement(ACCESSORIE_NAMES),
+  background: getRandomElement(BACKGROUND_NAMES),
+  ear: getRandomElement(EAR_NAMES),
+  eye: getRandomElement(EYE_NAMES),
+  hair: getRandomElement(HAIR_NAMES),
+  leg: getRandomElement(LEG_NAMES),
+  mouth: getRandomElement(MOUTH_NAMES),
+  neck: getRandomElement(NECK_NAMES),
+  nose: NOSE_NAMES[0],
+})
 
-  const randomAlpaca = async () => {
-    const randomProperties = {
-      accessorie: getRandomElement(ACCESSORIE_NAMES),
-      background: getRandomElement(BACKGROUND_NAMES),
-      ear: getRandomElement(EAR_NAMES),
-      eye: getRandomElement(EYE_NAMES),
-      hair: getRandomElement(HAIR_NAMES),
-      leg: getRandomElement(LEG_NAMES),
-      mouth: getRandomElement(MOUTH_NAMES),
-      neck: getRandomElement(NECK_NAMES),
-      nose: getRandomElement(NOSE_NAMES),
-    }
-    setSelectedProperties({ ...randomProperties })
-  }
+export const App = () => {
+  const [selectedProperties, setSelectedProperties] = useState<SelectedProperties>(generateRandomAlpaca());
+
+  const randomAlpaca = async () => setSelectedProperties(generateRandomAlpaca())
 
   const downloadAlpaca = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -68,41 +49,53 @@ export const App = () => {
       <h1>ALPACA GENERATOR</h1>
       <div className="content">
         <form>
-          <AccessorieSelect
-            selectedAccessorie={selectedProperties.accessorie}
+          <SelectProperty
+            label="Accessorie"
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, accessorie: value })}
+            options={ACCESSORIE_NAMES}
+            selectedOption={selectedProperties.accessorie}
           />
-          <BackgroundSelect
-            selectedBackground={selectedProperties.background}
+          <SelectProperty
+            label="Background"
+            selectedOption={selectedProperties.background}
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, background: value })}
+            options={BACKGROUND_NAMES}
           />
-          <EarSelect
-            selectedEar={selectedProperties.ear}
+          <SelectProperty
+            label="Ear"
+            selectedOption={selectedProperties.ear}
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, ear: value })}
+            options={EAR_NAMES}
           />
-          <EyeSelect
-            selectedEye={selectedProperties.eye}
+          <SelectProperty
+            label="Eye"
+            selectedOption={selectedProperties.eye}
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, eye: value })}
+            options={EYE_NAMES}
           />
-          <HairSelect
-            selectedHair={selectedProperties.hair}
+          <SelectProperty
+            label="hair"
+            selectedOption={selectedProperties.hair}
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, hair: value })}
+            options={HAIR_NAMES}
           />
-          <LegSelect
-            selectedLeg={selectedProperties.leg}
+          <SelectProperty
+            label="Leg"
+            selectedOption={selectedProperties.leg}
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, leg: value })}
+            options={LEG_NAMES}
           />
-          <MouthSelect
-            selectedMouth={selectedProperties.mouth}
+          <SelectProperty
+            label="Mouth"
+            selectedOption={selectedProperties.mouth}
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, mouth: value })}
+            options={MOUTH_NAMES}
           />
-          <NeckSelect
-            selectedNeck={selectedProperties.neck}
+          <SelectProperty
+            label="Neck"
+            selectedOption={selectedProperties.neck}
             onSelect={(value) => setSelectedProperties({ ...selectedProperties, neck: value })}
-          />
-          <NoseSelect
-            selectedNose={selectedProperties.nose}
-            onSelect={(value) => setSelectedProperties({ ...selectedProperties, nose: value })}
+            options={NECK_NAMES}
           />
         </form>
         <Alpaca selectedProperties={selectedProperties} />
