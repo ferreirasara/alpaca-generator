@@ -5,15 +5,11 @@ type EarSelectProps = {
   onSelect: (value: string) => void
 }
 export const EarSelect = ({ selectedEar, onSelect }: EarSelectProps) => {
-  return <div className="row m-2">
-    <div className="col-auto">
-      <label htmlFor="ear" className="form-label">Ear:</label>
-    </div>
-    <div className="col">
-      <select id="ear" className="form-select" onChange={(e) => onSelect(e.currentTarget.value)}>
-        {EAR_NAMES?.map(cur => <option
-          selected={selectedEar === cur} value={cur}>{cur}</option>)}
-      </select>
-    </div>
-  </div>
+  return <div className="form-item">
+    <label className="form-label" htmlFor="ear" >Ear:</label>
+    <select className="form-select" id="ear" onChange={(e) => onSelect(e.currentTarget.value)}>
+      {EAR_NAMES?.map(cur => <option
+        selected={selectedEar === cur} value={cur}>{cur}</option>)}
+    </select>
+  </div >
 }

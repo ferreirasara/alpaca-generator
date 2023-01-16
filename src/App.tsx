@@ -5,6 +5,7 @@ import { BackgroundSelect } from "./components/BackgroundSelect";
 import { EarSelect } from "./components/EarSelect";
 import { EyeSelect } from "./components/EyeSelect";
 import { HairSelect } from "./components/HairSelect";
+import { Layout } from "./components/Layout";
 import { LegSelect } from "./components/LegSelect";
 import { MouthSelect } from "./components/MouthSelect";
 import { NeckSelect } from "./components/NeckSelect";
@@ -12,6 +13,7 @@ import { NoseSelect } from "./components/NoseSelect";
 import { ACCESSORIE_LINKS, BACKGROUND_LINKS, EAR_LINKS, EYE_LINKS, HAIR_LINKS, LEG_LINKS, MOUTH_LINKS, NECK_LINKS, NOSE_LINKS } from "./utils/assetsLinks";
 import { ACCESSORIE_NAMES, BACKGROUND_NAMES, EAR_NAMES, EYE_NAMES, HAIR_NAMES, LEG_NAMES, MOUTH_NAMES, NECK_NAMES, NOSE_NAMES } from "./utils/assetsNames";
 import { getRandomElement } from "./utils/utils";
+import './app.css';
 
 export const App = () => {
   const [selectedAccessorie, setSelectedAccessorie] = useState<string>(getRandomElement(ACCESSORIE_NAMES));
@@ -37,58 +39,40 @@ export const App = () => {
   }
 
   return (
-    <div className="container" style={{ height: '100vh' }}>
-      <div className="row align-items-center" style={{ height: '100vh' }}>
-        <div className="col">
-          <div className="row text-center">
-            <div className="col">
-              <h1>ALPACA GENERATOR</h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-6">
-              <form>
-                <AccessorieSelect selectedAccessorie={selectedAccessorie} onSelect={(value) => setSelectedAccessorie(value)} />
-                <BackgroundSelect selectedBackground={selectedBackground} onSelect={(value) => setSelectedBackground(value)} />
-                <EarSelect selectedEar={selectedEar} onSelect={(value) => setSelectedEar(value)} />
-                <EyeSelect selectedEye={selectedEye} onSelect={(value) => setSelectedEye(value)} />
-                <HairSelect selectedHair={selectedHair} onSelect={(value) => setSelectedHair(value)} />
-                <LegSelect selectedLeg={selectedLeg} onSelect={(value) => setSelectedLeg(value)} />
-                <MouthSelect selectedMouth={selectedMouth} onSelect={(value) => setSelectedMouth(value)} />
-                <NeckSelect selectedNeck={selectedNeck} onSelect={(value) => setSelectedNeck(value)} />
-                <NoseSelect selectedNose={selectedNose} onSelect={(value) => setSelectedNose(value)} />
-              </form>
-            </div>
-            <div className="col-6">
-              <div className="row">
-                <div className="col">
-                  <Alpaca
-                    accessorieImgLink={ACCESSORIE_LINKS?.[selectedAccessorie]}
-                    backgroundImgLink={BACKGROUND_LINKS?.[selectedBackground]}
-                    earImgLink={EAR_LINKS?.[selectedEar]}
-                    eyeImgLink={EYE_LINKS?.[selectedEye]}
-                    hairImgLink={HAIR_LINKS?.[selectedHair]}
-                    legImgLink={LEG_LINKS?.[selectedLeg]}
-                    mouthImgLink={MOUTH_LINKS?.[selectedMouth]}
-                    neckImgLink={NECK_LINKS?.[selectedNeck]}
-                    noseImgLink={NOSE_LINKS?.[selectedNose]}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row justify-content-center">
-              <div className="col-auto">
-                <button type="button" className="btn btn-primary m-1" onClick={randomAlpaca}>
-                  <i className="bi bi-shuffle"></i> Random
-                </button>
-                {/* <button type="button" className="btn btn-primary m-1"><i className="bi bi-download"></i> Download</button> */}
-              </div>
-            </div>
-          </div >
-
-        </div>
-
+    <Layout>
+      <h1>ALPACA GENERATOR</h1>
+      <div className="content">
+        <form>
+          <AccessorieSelect selectedAccessorie={selectedAccessorie} onSelect={(value) => setSelectedAccessorie(value)} />
+          <BackgroundSelect selectedBackground={selectedBackground} onSelect={(value) => setSelectedBackground(value)} />
+          <EarSelect selectedEar={selectedEar} onSelect={(value) => setSelectedEar(value)} />
+          <EyeSelect selectedEye={selectedEye} onSelect={(value) => setSelectedEye(value)} />
+          <HairSelect selectedHair={selectedHair} onSelect={(value) => setSelectedHair(value)} />
+          <LegSelect selectedLeg={selectedLeg} onSelect={(value) => setSelectedLeg(value)} />
+          <MouthSelect selectedMouth={selectedMouth} onSelect={(value) => setSelectedMouth(value)} />
+          <NeckSelect selectedNeck={selectedNeck} onSelect={(value) => setSelectedNeck(value)} />
+          <NoseSelect selectedNose={selectedNose} onSelect={(value) => setSelectedNose(value)} />
+        </form>
+        <Alpaca
+          accessorieImgLink={ACCESSORIE_LINKS?.[selectedAccessorie]}
+          backgroundImgLink={BACKGROUND_LINKS?.[selectedBackground]}
+          earImgLink={EAR_LINKS?.[selectedEar]}
+          eyeImgLink={EYE_LINKS?.[selectedEye]}
+          hairImgLink={HAIR_LINKS?.[selectedHair]}
+          legImgLink={LEG_LINKS?.[selectedLeg]}
+          mouthImgLink={MOUTH_LINKS?.[selectedMouth]}
+          neckImgLink={NECK_LINKS?.[selectedNeck]}
+          noseImgLink={NOSE_LINKS?.[selectedNose]}
+        />
       </div>
-    </div >
+      <div className="buttons">
+        <button className="btn btn-primary" type="button" onClick={randomAlpaca}>
+          <i className="bi bi-shuffle"></i> Random
+        </button>
+        <button className="btn btn-primary" type="button">
+          <i className="bi bi-download"></i> Download
+        </button>
+      </div>
+    </Layout>
   );
 }
